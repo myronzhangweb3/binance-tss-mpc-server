@@ -1,6 +1,7 @@
 package main
 
 import (
+	tsshttp "binance-tss-mpc-server/cmd/tss"
 	"bufio"
 	"flag"
 	"fmt"
@@ -67,7 +68,7 @@ func main() {
 	if nil != err {
 		log.Fatal(err)
 	}
-	s := NewTssHttpServer(tssAddr, tss)
+	s := tsshttp.NewTssHttpServer(tssAddr, tss)
 	go func() {
 		if err := s.Start(); err != nil {
 			fmt.Println(err)

@@ -15,8 +15,8 @@ import (
 	"testing"
 	"time"
 
-	tsslibcommon "github.com/binance-chain/tss-lib/common"
-	btss "github.com/binance-chain/tss-lib/tss"
+	tsslibcommon "github.com/bnb-chain/tss-lib/v2/common"
+	btss "github.com/bnb-chain/tss-lib/v2/tss"
 	"github.com/ipfs/go-log"
 	"github.com/libp2p/go-libp2p-peerstore/addr"
 	zlog "github.com/rs/zerolog/log"
@@ -175,7 +175,7 @@ func (s *TssKeysignTestSuite) TestSignMessage(c *C) {
 	c.Assert(err, IsNil)
 	wg := sync.WaitGroup{}
 	lock := &sync.Mutex{}
-	keysignResult := make(map[int][]*tsslibcommon.ECSignature)
+	keysignResult := make(map[int][]*tsslibcommon.SignatureData)
 	conf := common.TssConfig{
 		KeyGenTimeout:   90 * time.Second,
 		KeySignTimeout:  90 * time.Second,

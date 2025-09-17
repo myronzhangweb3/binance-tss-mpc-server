@@ -3,7 +3,7 @@ package keysign
 import (
 	"errors"
 	"fmt"
-	"github.com/binance-chain/tss-lib/common"
+	"github.com/bnb-chain/tss-lib/v2/common"
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
@@ -14,7 +14,7 @@ type Notifier struct {
 	MessageID  string
 	messages   [][]byte // the message
 	poolPubKey string
-	resp       chan []*common.ECSignature
+	resp       chan []*common.SignatureData
 }
 
 // NewNotifier create a new instance of Notifier
@@ -32,7 +32,7 @@ func NewNotifier(messageID string, messages [][]byte, poolPubKey string) (*Notif
 		MessageID:  messageID,
 		messages:   messages,
 		poolPubKey: poolPubKey,
-		resp:       make(chan []*common.ECSignature, 1),
+		resp:       make(chan []*common.SignatureData, 1),
 	}, nil
 }
 
@@ -40,7 +40,7 @@ func NewNotifier(messageID string, messages [][]byte, poolPubKey string) (*Notif
 // There is a method call VerifyBytes in crypto.PubKey, but we can't use that method to verify the signature, because it always hash the message
 // first and then verify the hash of the message against the signature , which is not the case in tss
 // go-tss respect the payload it receives , assume the payload had been hashed already by whoever send it in.
-func (n *Notifier) verifySignature(data *common.ECSignature, msg []byte) (bool, error) {
+func (n *Notifier) verifySignature(data *common.SignatureData, msg []byte) (bool, error) {
 	pubKey, err := secp256k1.RecoverPubkey(msg, append(data.Signature, data.SignatureRecovery...))
 	if err != nil {
 		return false, fmt.Errorf("fail to recover public key:%w", err)
@@ -55,7 +55,7 @@ func (n *Notifier) verifySignature(data *common.ECSignature, msg []byte) (bool, 
 // ProcessSignature is to verify whether the signature is valid
 // return value bool , true indicated we already gather all the signature from keysign party, and they are all match
 // false means we are still waiting for more signature from keysign party
-func (n *Notifier) ProcessSignature(data []*common.ECSignature) (bool, error) {
+func (n *Notifier) ProcessSignature(data []*common.SignatureData) (bool, error) {
 	// only need to verify the signature when data is not nil
 	// when data is nil , which means keysign  failed, there is no signature to be verified in that case
 	// for gg20, it wrap the signature R,S into ECSignature structure
@@ -80,6 +80,6 @@ func (n *Notifier) ProcessSignature(data []*common.ECSignature) (bool, error) {
 }
 
 // GetResponseChannel the final signature gathered from keysign party will be returned from the channel
-func (n *Notifier) GetResponseChannel() <-chan []*common.ECSignature {
+func (n *Notifier) GetResponseChannel() <-chan []*common.SignatureData {
 	return n.resp
 }

@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/binance-chain/tss-lib/common"
-	tsslibcommon "github.com/binance-chain/tss-lib/common"
+	"github.com/bnb-chain/tss-lib/v2/common"
+	tsslibcommon "github.com/bnb-chain/tss-lib/v2/common"
 	"github.com/golang/protobuf/proto"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/network"
@@ -25,7 +25,7 @@ var signatureNotifierProtocol protocol.ID = "/p2p/signatureNotifier"
 type signatureItem struct {
 	messageID     string
 	peerID        peer.ID
-	signatureData []*common.ECSignature
+	signatureData []*common.SignatureData
 }
 
 // SignatureNotifier is design to notify the
@@ -75,10 +75,10 @@ func (s *SignatureNotifier) handleStream(stream network.Stream) {
 		return
 	}
 	s.streamMgr.AddStream(msg.ID, stream)
-	var signatures []*common.ECSignature
+	var signatures []*common.SignatureData
 	if len(msg.Signatures) > 0 && msg.KeysignStatus == messages.KeysignSignature_Success {
 		for _, el := range msg.Signatures {
-			var signature common.ECSignature
+			var signature common.SignatureData
 			if err := proto.Unmarshal(el, &signature); err != nil {
 				logger.Error().Err(err).Msg("fail to unmarshal signature data")
 				return
@@ -149,11 +149,11 @@ func (s *SignatureNotifier) sendOneMsgToPeer(m *signatureItem) error {
 }
 
 // BroadcastSignature sending the keysign signature to all other peers
-func (s *SignatureNotifier) BroadcastSignature(messageID string, sig []*tsslibcommon.ECSignature, peers []peer.ID) error {
+func (s *SignatureNotifier) BroadcastSignature(messageID string, sig []*tsslibcommon.SignatureData, peers []peer.ID) error {
 	return s.broadcastCommon(messageID, sig, peers)
 }
 
-func (s *SignatureNotifier) broadcastCommon(messageID string, sig []*tsslibcommon.ECSignature, peers []peer.ID) error {
+func (s *SignatureNotifier) broadcastCommon(messageID string, sig []*tsslibcommon.SignatureData, peers []peer.ID) error {
 	wg := sync.WaitGroup{}
 	for _, p := range peers {
 		if p == s.host.ID() {
@@ -196,7 +196,7 @@ func (s *SignatureNotifier) removeNotifier(n *Notifier) {
 }
 
 // WaitForSignature wait until keysign finished and signature is available
-func (s *SignatureNotifier) WaitForSignature(messageID string, message [][]byte, poolPubKey string, timeout time.Duration, sigChan chan string) ([]*common.ECSignature, error) {
+func (s *SignatureNotifier) WaitForSignature(messageID string, message [][]byte, poolPubKey string, timeout time.Duration, sigChan chan string) ([]*common.SignatureData, error) {
 	n, err := NewNotifier(messageID, message, poolPubKey)
 	if err != nil {
 		return nil, fmt.Errorf("fail to create notifier")

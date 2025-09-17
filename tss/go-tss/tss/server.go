@@ -2,7 +2,6 @@ package tss
 
 import (
 	"binance-tss-mpc-server/tss/go-tss/keygen"
-	"binance-tss-mpc-server/tss/go-tss/keyresharing"
 	"binance-tss-mpc-server/tss/go-tss/keysign"
 )
 
@@ -14,5 +13,4 @@ type Server interface {
 	GetKnownPeers() []PeerInfo
 	Keygen(req keygen.Request) (keygen.Response, error)
 	KeySign(req keysign.Request) (keysign.Response, error)
-	KeyResharing(req keyresharing.Request) (keyresharing.Response, error)
 }

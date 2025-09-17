@@ -8,15 +8,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/binance-chain/tss-lib/ecdsa/resharing"
 	"io"
 	"math/big"
 	"os"
 	"strings"
 
-	"github.com/binance-chain/tss-lib/ecdsa/keygen"
-	"github.com/binance-chain/tss-lib/ecdsa/signing"
-	btss "github.com/binance-chain/tss-lib/tss"
+	"github.com/bnb-chain/tss-lib/v2/ecdsa/keygen"
+	"github.com/bnb-chain/tss-lib/v2/ecdsa/signing"
+	btss "github.com/bnb-chain/tss-lib/v2/tss"
 	"github.com/btcsuite/btcd/btcec"
 	tcrypto "github.com/cometbft/cometbft/crypto"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -166,42 +165,6 @@ func GetMsgRound(msg []byte, partyID *btss.PartyID, isBroadcast bool) (blame.Rou
 			RoundMsg: messages.KEYGEN3,
 		}, nil
 
-	case *resharing.DGRound1Message:
-		return blame.RoundInfo{
-			Index:    0,
-			RoundMsg: messages.DGRound1,
-		}, nil
-
-	case *resharing.DGRound2Message1:
-		return blame.RoundInfo{
-			Index:    1,
-			RoundMsg: messages.DGRound2a,
-		}, nil
-
-	case *resharing.DGRound2Message2:
-		return blame.RoundInfo{
-			Index:    2,
-			RoundMsg: messages.DGRound2b,
-		}, nil
-
-	case *resharing.DGRound3Message1:
-		return blame.RoundInfo{
-			Index:    3,
-			RoundMsg: messages.DGRound3a,
-		}, nil
-
-	case *resharing.DGRound3Message2:
-		return blame.RoundInfo{
-			Index:    4,
-			RoundMsg: messages.DGRound3b,
-		}, nil
-
-	case *resharing.DGRound4Message:
-		return blame.RoundInfo{
-			Index:    5,
-			RoundMsg: messages.DGRound4,
-		}, nil
-
 	case *signing.SignRound1Message1:
 		return blame.RoundInfo{
 			Index:    0,
@@ -248,6 +211,16 @@ func GetMsgRound(msg []byte, partyID *btss.PartyID, isBroadcast bool) (blame.Rou
 		return blame.RoundInfo{
 			Index:    7,
 			RoundMsg: messages.KEYSIGN7,
+		}, nil
+	case *signing.SignRound8Message:
+		return blame.RoundInfo{
+			Index:    8,
+			RoundMsg: messages.KEYSIGN8,
+		}, nil
+	case *signing.SignRound9Message:
+		return blame.RoundInfo{
+			Index:    9,
+			RoundMsg: messages.KEYSIGN9,
 		}, nil
 
 	default:

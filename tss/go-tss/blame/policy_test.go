@@ -5,8 +5,8 @@ import (
 	"sync"
 	"testing"
 
-	bkg "github.com/binance-chain/tss-lib/ecdsa/keygen"
-	btss "github.com/binance-chain/tss-lib/tss"
+	bkg "github.com/bnb-chain/tss-lib/v2/ecdsa/keygen"
+	btss "github.com/bnb-chain/tss-lib/v2/tss"
 	"github.com/libp2p/go-libp2p-core/peer"
 	. "gopkg.in/check.v1"
 
@@ -55,7 +55,7 @@ func (p *policyTestSuite) SetUpTest(c *C) {
 	outCh := make(chan btss.Message, len(partiesID))
 	endCh := make(chan bkg.LocalPartySaveData, len(partiesID))
 	ctx := btss.NewPeerContext(partiesID)
-	params := btss.NewParameters(ctx, localPartyID, len(partiesID), 3)
+	params := btss.NewParameters(btss.S256(), ctx, localPartyID, len(partiesID), 3)
 	keyGenParty := bkg.NewLocalParty(params, outCh, endCh)
 
 	testPartyMap := new(sync.Map)

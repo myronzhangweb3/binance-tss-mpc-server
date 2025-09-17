@@ -2,12 +2,12 @@ package conversion
 
 import (
 	"encoding/json"
+	"github.com/btcsuite/btcd/btcec"
 	"math/big"
 	"sort"
 	"testing"
 
-	"github.com/binance-chain/tss-lib/crypto"
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/bnb-chain/tss-lib/v2/crypto"
 	coskey "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types/bech32/legacybech32" // nolint:staticcheck
 	"github.com/libp2p/go-libp2p-core/peer"

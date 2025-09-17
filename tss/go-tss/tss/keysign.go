@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	tsslibcommon "github.com/binance-chain/tss-lib/common"
+	tsslibcommon "github.com/bnb-chain/tss-lib/v2/common"
 	"github.com/libp2p/go-libp2p-core/peer"
 
 	"binance-tss-mpc-server/p2p"
@@ -323,14 +323,9 @@ func (t *TssServer) broadcastKeysignFailure(messageID string, peers []peer.ID) {
 	}
 }
 
-func (t *TssServer) batchSignatures(sigs []*tsslibcommon.ECSignature, msgsToSign [][]byte) keysign.Response {
+func (t *TssServer) batchSignatures(sigs []*tsslibcommon.SignatureData, msgsToSign [][]byte) keysign.Response {
 	var signatures []keysign.Signature
 	for i, sig := range sigs {
-		//msg := base64.StdEncoding.EncodeToString(msgsToSign[i])
-		//r := base64.StdEncoding.EncodeToString(sig.R)
-		//s := base64.StdEncoding.EncodeToString(sig.S)
-		//recovery := base64.StdEncoding.EncodeToString(sig.SignatureRecovery)
-
 		msg := hex.EncodeToString(msgsToSign[i])
 		sign := hex.EncodeToString(sig.Signature)
 		r := hex.EncodeToString(sig.R)

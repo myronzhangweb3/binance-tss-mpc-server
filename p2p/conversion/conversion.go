@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"github.com/btcsuite/btcd/btcec/v2"
 	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"math"
 	"math/big"
@@ -13,9 +14,8 @@ import (
 	"strings"
 
 	"binance-tss-mpc-server/p2p/messages"
-	"github.com/binance-chain/tss-lib/crypto"
-	btss "github.com/binance-chain/tss-lib/tss"
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/bnb-chain/tss-lib/v2/crypto"
+	btss "github.com/bnb-chain/tss-lib/v2/tss"
 	coskey "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types/bech32/legacybech32" // nolint:staticcheck
 	crypto2 "github.com/libp2p/go-libp2p-core/crypto"

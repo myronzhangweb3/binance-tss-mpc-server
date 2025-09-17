@@ -6,8 +6,7 @@ import (
 
 func SetupBech32Prefix() {
 	config := sdk.GetConfig()
-	// thorchain will import go-tss as a library , thus this is not needed, we copy the prefix here to avoid go-tss to import thorchain
-	config.SetBech32PrefixForAccount("thor", "thorpub")
-	config.SetBech32PrefixForValidator("thorv", "thorvpub")
-	config.SetBech32PrefixForConsensusNode("thorc", "thorcpub")
+	config.SetBech32PrefixForAccount("p2p", "p2ppub")
+	config.SetBech32PrefixForValidator("p2pv", "p2pvpub")
+	config.SetBech32PrefixForConsensusNode("p2pc", "p2pcpub")
 }
