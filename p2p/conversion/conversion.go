@@ -5,15 +5,17 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/btcsuite/btcd/btcec/v2"
-	ethcrypto "github.com/ethereum/go-ethereum/crypto"
 	"math"
 	"math/big"
 	"sort"
 	"strconv"
 	"strings"
 
+	"github.com/btcsuite/btcd/btcec/v2"
+	ethcrypto "github.com/ethereum/go-ethereum/crypto"
+
 	"binance-tss-mpc-server/p2p/messages"
+
 	"github.com/bnb-chain/tss-lib/v2/crypto"
 	btss "github.com/bnb-chain/tss-lib/v2/tss"
 	coskey "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"

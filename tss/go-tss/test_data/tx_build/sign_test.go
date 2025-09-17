@@ -3,12 +3,13 @@ package tx_build
 import (
 	"encoding/hex"
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
-	"log"
-	"testing"
 )
 
 var (

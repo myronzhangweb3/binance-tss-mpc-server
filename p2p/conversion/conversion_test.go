@@ -2,10 +2,11 @@ package conversion
 
 import (
 	"encoding/json"
-	"github.com/btcsuite/btcd/btcec"
 	"math/big"
 	"sort"
 	"testing"
+
+	"github.com/btcsuite/btcd/btcec"
 
 	"github.com/bnb-chain/tss-lib/v2/crypto"
 	coskey "github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"

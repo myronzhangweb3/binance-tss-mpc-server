@@ -3,6 +3,7 @@ package keysign
 import (
 	"errors"
 	"fmt"
+
 	"github.com/bnb-chain/tss-lib/v2/common"
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
